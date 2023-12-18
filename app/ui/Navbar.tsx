@@ -5,41 +5,62 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from './components/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
+import DarkModeToggle from './components/darkModeButton';
+import { useEffect, useState } from 'react';
 
 export default function Navbar() {
 
   const { data } = useSession()
-
   let image = data?.user?.image as string
+  const local = localStorage.getItem('darkMode')
+
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (local === 'true') {
+      setDarkMode(true)
+    } else {
+      setDarkMode(false)
+    }
+
+  }, [local]);
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-bondi-950">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <Image src="/assets/logo.svg" alt=" Logo" width={40} height={40} />
+
+          {darkMode ? (
+            <Image src="/assets/logo-light.svg" alt=" Logo" width={40} height={40} />
+          ) : (
+            <Image src="/assets/logo-dark.svg" alt=" Logo" width={40} height={40} />
+          )}
+
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-bondi-50">Tarefas</span>
         </a>
 
-        <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+        <div className="flex gap-4 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+
+          <DarkModeToggle />
 
           {!data?.user && (
             <Button variant='default' onClick={() => window.location.href = '/api/auth/signin'}>Criar</Button>
           )}
 
           {data?.user && (
-         
-              <DropdownMenu>
-                <DropdownMenuTrigger><Image src={image} alt="Foto de Perfil" width={40} height={40} className="rounded-full" /></DropdownMenuTrigger>
-                <DropdownMenuContent className='mt-2 mr-10 md:mr-0'>
-                  <Button  className='justify-center' onClick={() => window.location.href = '/api/auth/signout'} >Sair</Button>
-                </DropdownMenuContent>
-              </DropdownMenu>
-           
+
+            <DropdownMenu>
+              <DropdownMenuTrigger><Image src={image} alt="Foto de Perfil" width={40} height={40} className="rounded-full" /></DropdownMenuTrigger>
+              <DropdownMenuContent className='mt-2 mr-10 md:mr-0'>
+                <Button className='justify-center' onClick={() => window.location.href = '/api/auth/signout'} >Sair</Button>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
           )}
 
-          </div>
-          </div>
-  {/** 
+        </div>
+      </div>
+      {/** 
           <button data-collapse-toggle="navbar-cta" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none  dark:text-gray-40 " aria-controls="navbar-cta" aria-expanded="false">
             <span className="sr-only">Open main menu</span>
             <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">

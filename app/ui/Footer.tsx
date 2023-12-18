@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="md:flex md:justify-between">
             <div className="py-12 md:mb-0">
                 <a href="https://flowbite.com" className="flex items-center justify-center">
-                    <Image src="/assets/logo.svg" className="h-8" alt="FlowBite Logo" width={50} height={50} />
+                    <Image src="/assets/logo-light.svg" className="h-8" alt="FlowBite Logo" width={50} height={50} />
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Tarefas</span>
                 </a>
             </div>

@@ -16,7 +16,7 @@ export default function Home() {
       <section className="bg-white dark:bg-bondi-950">
         <div className="max-w-screen-xl mx-auto lg:py-32 lg:px-6 py-8 px-4 flex flex-col md:flex-row justify-between">
           <div className="flex flex-col gap-5">
-            <h1 className="text-4xl text-bondi-50 font-bold">Testando o Framer</h1>
+            <h1 className="text-4xl text-bondi-950 dark:text-bondi-100 font-bold">Testando o Framer</h1>
             <p className="dark:text-bondi-100" >O Framer é uma ferramenta para fazer animações</p>
             <a href="framer" className="dark:text-bondi-100 font-semibold " >Crie animações agora</a>
           </div>
