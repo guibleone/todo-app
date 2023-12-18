@@ -1,6 +1,7 @@
-import Footer from "./ui/components/Footer";
-import Header from "./ui/components/Header";
-import Navbar from "./ui/components/Navbar";
+import { getCurrentUser } from "./lib/sessions";
+import Footer from "./ui/Footer";
+import Header from "./ui/Header";
+import Navbar from "./ui/Navbar";
 import { inter } from "./ui/fonts";
 import Framer from "./ui/framer/Framer";
 
