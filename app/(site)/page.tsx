@@ -1,5 +1,3 @@
-import { use, useEffect } from "react";
-import { getCurrentUser } from "../lib/sessions";
 import Footer from "../ui/Footer";
 import Header from "../ui/Header";
 import Navbar from "../ui/Navbar";

@@ -1,41 +1,66 @@
 'use client'
-import axios from 'axios';
-import React, { useState } from 'react'
-import {  FieldValues, SubmitHandler, } from 'react-hook-form';
 
-type Task = {
-    title?: string,
-    description?: string,
-    completed?: Boolean
-}
+import { createTask } from '@/app/lib/actions';
+import { Button } from '@/app/ui/components/button';
+import { useFormState } from 'react-dom';
 
 export default function CreateForm() {
+    const initialState = { message: null, errors: {} };
 
-    const [task, setTask] = useState<Task>({
-        title: '',
-        description: '',
-        completed: false
-    })
-
-    const onchange = (e: any) => {
-        const { name, value } = e.target
-        setTask({ ...task, [name]: value })
-    }
-
-    const onSubmit = (e:any) => {
-       e.preventDefault()
-       axios.post('/api/tasks', task).then(res => console.log(res.data))
-    }
-
+    const [state, dispatch] = useFormState(createTask, initialState);
 
     return (
-        <div className='flex flex-col gap-5'>
-            <form onSubmit={onSubmit}>
-                <input onChange={onchange} name='title' className='rounded-md  p-3 ring-2 ring-inset shadow-lg bg-bondi-100' type="text" placeholder='Digite o nome da tarefa' />
-                <textarea name='description' onChange={onchange} id="message" className=" p-2.5 shadow-lg w-full text-sm bg-bondi-100" placeholder="Descrição" />
-    
-                <button type='submit' className='bg-bondi-400 text-white rounded-md p-2 font-bold'>Criar</button>
-            </form>
-        </div>
+        <form action={dispatch}>
+            <div className="rounded-md bg-gray-50 p-4 md:p-6">
+                <div className="mb-4">
+                    <label htmlFor="description" className="mb-2 dark:text-black block text-sm font-medium">
+                        Título
+                    </label>
+                    <div className="relative mt-2 rounded-md">
+                        <div className="relative">
+                            <input
+                                id="title"
+                                name="title"
+                                type="text"
+                                placeholder="Digite o título da tarefa"
+                                className="peer block w-full rounded-md border dark:text-black border-gray-200 py-2 px-4 text-sm outline-2 placeholder:text-gray-500"
+                                aria-describedby="title-error"
+                            />
+
+                        </div>
+                    </div>
+                    <div id="title-error" aria-live="polite" aria-atomic="true">
+                        {state?.errors?.title &&
+                            state?.errors.title.map((error: string) => (
+                                <p className="mt-2 text-sm text-red-500" key={error}>
+                                    {error}
+                                </p>
+                            ))}
+                    </div>
+
+                </div>
+                <div className="mb-4">
+                    <label htmlFor="description" className="mb-2 block text-sm font-medium dark:text-black">
+                        Descrição
+                    </label>
+                    <div className="relative mt-2 rounded-md">
+                        <div className="relative">
+                            <input
+                                id="description"
+                                name="description"
+                                type="text"
+                                placeholder="Digite a descrição da tarefa"
+                                className="peer block w-full rounded-md border  dark:text-black border-gray-200 py-2 px-4 text-sm outline-2 placeholder:text-gray-500"
+                                aria-describedby="description-error"
+                            />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className='justify-center flex mt-10'>
+                <Button className='w-full' type="submit">Criar</Button>
+            </div>
+        </form>
     )
 }
