@@ -1,12 +1,14 @@
-import { getCurrentUser } from "./lib/sessions";
-import Footer from "./ui/Footer";
-import Header from "./ui/Header";
-import Navbar from "./ui/Navbar";
-import { inter } from "./ui/fonts";
-import Framer from "./ui/framer/Framer";
+import { use, useEffect } from "react";
+import { getCurrentUser } from "../lib/sessions";
+import Footer from "../ui/Footer";
+import Header from "../ui/Header";
+import Navbar from "../ui/Navbar";
+import { inter } from "../ui/fonts";
+import Framer from "../ui/framer/Framer";
 
 
 export default function Home() {
+  
   return (
     <main className="flex min-h-screen flex-col">
       <Navbar />
@@ -22,13 +24,13 @@ export default function Home() {
           </div>
           <div className="justify-center md:justify-end self-center py-12">
             <Framer />
-
           </div>
         </div>
 
-
       </section>
+
       <Footer />
+
     </main>
 
 

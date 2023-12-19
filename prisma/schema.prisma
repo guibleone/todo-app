@@ -55,3 +55,10 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Task {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  description String?
+  completed Boolean? @default(false)
+}

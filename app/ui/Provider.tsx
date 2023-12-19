@@ -8,7 +8,6 @@ type ProviderProps = {
 }
 
 export default function Provider({ children }: ProviderProps) {
-
     return (
         <SessionProvider>
             {children}

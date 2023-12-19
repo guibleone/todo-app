@@ -12,30 +12,12 @@ export default function Navbar() {
 
   const { data } = useSession()
   let image = data?.user?.image as string
-  const local = localStorage.getItem('darkMode')
 
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
-    if (local === 'true') {
-      setDarkMode(true)
-    } else {
-      setDarkMode(false)
-    }
-
-  }, [local]);
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-bondi-950">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
-
-          {darkMode ? (
-            <Image src="/assets/logo-light.svg" alt=" Logo" width={40} height={40} />
-          ) : (
-            <Image src="/assets/logo-dark.svg" alt=" Logo" width={40} height={40} />
-          )}
-
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-bondi-50">Tarefas</span>
         </a>
 
