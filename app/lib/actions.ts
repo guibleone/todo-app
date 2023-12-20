@@ -1,20 +1,19 @@
 'use server'
-
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import getCurrentUser from "@/app/actions/getUser";
 import prisma from "@/app/lib/db";
 
-// Define a Zod schema for task creation form
+// Define um esquema de validação para o formulário de tarefas
 const FormSchema = z.object({
     id: z.string(),
     userId: z.string(),
     title: z.string({
-        invalid_type_error: 'Please select a customer.',
+        invalid_type_error: 'Please enter a title for your task.',
     }),
     description: z.string({
-        invalid_type_error: 'Please select a customer.',
+        invalid_type_error: 'Please enter a description for your task.',
     }),
 });
 
@@ -27,7 +26,8 @@ export type State = {
     };
     message?: string | null;
   };
-// Function to create a task
+
+// CRIAR TAREFA
 export async function createTask(prevState: State, formData: FormData) {
     // Validate form using Zod
     const validatedFields = CreateTask.safeParse({
@@ -77,4 +77,23 @@ export async function createTask(prevState: State, formData: FormData) {
     revalidatePath('/dashboard');
     redirect('/dashboard');
 
+}
+
+/** DELETAR TAREFA */
+
+export async function deleteTask(id:string){
+    try{
+        await prisma.task.delete({
+            where:{
+                id:id
+            }
+        })
+    }
+    catch(error){
+        console.error('Database Error:', error);
+        return {
+            message: 'Database Error: Failed to Delete Task.',
+        };
+    }
+    revalidatePath('/dashboard');
 }

@@ -3,6 +3,9 @@ import CreateForm from './components/createForm'
 import Navbar from '../ui/Navbar'
 import { fetchTasks } from '../actions/getTasks'
 import { Task } from '@prisma/client'
+import { Button } from '../ui/components/button'
+import { deleteTask } from '../lib/actions'
+import { DeleteTask } from './components/buttons'
 
 export default async function Dashobard() {
 
@@ -33,6 +36,7 @@ export default async function Dashobard() {
                                         {task.description}
                                     </p>
                                     {task.completed ? <p className='text-green-500'>Concluída</p> : <p className='text-red-500'>Não concluída</p>}
+                                    <DeleteTask id={task.id} />
                                 </div>
                             ))}
                         </div>

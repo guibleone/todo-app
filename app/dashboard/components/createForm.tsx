@@ -1,11 +1,17 @@
 'use client'
-
 import { createTask } from '@/app/lib/actions';
 import { Button } from '@/app/ui/components/button';
 import { useFormState } from 'react-dom';
 
+
 export default function CreateForm() {
-    const initialState = { message: null, errors: {} };
+    const initialState = {
+        errors: {
+          title: undefined,
+          description: undefined,
+        },
+        message: '',
+      };
 
     const [state, dispatch] = useFormState(createTask, initialState);
 
@@ -23,7 +29,7 @@ export default function CreateForm() {
                                 name="title"
                                 type="text"
                                 placeholder="Digite o título da tarefa"
-                                className="peer block w-full rounded-md border dark:text-black border-gray-200 py-2 px-4 text-sm outline-2 placeholder:text-gray-500"
+                                className=" block w-full rounded-md border dark:text-black border-gray-200 py-2 px-4 text-sm outline-2 placeholder:text-gray-500"
                                 aria-describedby="title-error"
                             />
 
@@ -56,6 +62,15 @@ export default function CreateForm() {
 
                         </div>
                     </div>
+                    <div id="description-error" aria-live="polite" aria-atomic="true">
+                        {state?.errors?.description &&
+                            state?.errors.description.map((error: string) => (
+                                <p className="mt-2 text-sm text-red-500" key={error}>
+                                    {error}
+                                </p>
+                            ))}
+                    </div>
+
                 </div>
             </div>
             <div className='justify-center flex mt-10'>
