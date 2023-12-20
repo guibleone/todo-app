@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Button } from './components/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import DarkModeToggle from './components/darkModeButton';
-import { useEffect, useState } from 'react';
+
 
 export default function Navbar() {
 
@@ -17,9 +17,9 @@ export default function Navbar() {
   return (
     <nav className="bg-white border-gray-200 dark:bg-bondi-950">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
+        <Link href="/" passHref>
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-bondi-50">Tarefas</span>
-        </a>
+        </Link>
 
         <div className="flex gap-4 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
 
@@ -33,8 +33,19 @@ export default function Navbar() {
 
             <DropdownMenu>
               <DropdownMenuTrigger><Image src={image} alt="Foto de Perfil" width={40} height={40} className="rounded-full" /></DropdownMenuTrigger>
-              <DropdownMenuContent className='mt-2 mr-10 md:mr-0'>
-                <Button className='justify-center' onClick={() => window.location.href = '/api/auth/signout'} >Sair</Button>
+              <DropdownMenuContent className='mt-2 mr-10 md:mr-0 flex flex-col gap-1 bg-bondi-950 py-4 px-2'>
+
+                <DropdownMenuItem className='justify-center ' >
+                 
+                    <Link className='underline' href="/dashboard">Dashboard</Link>
+              
+                </DropdownMenuItem>
+
+                <DropdownMenuSeparator />
+
+                <DropdownMenuItem className='justify-center' onSelect={() => window.location.href = '/dashboard'}>
+                  <Button variant="destructive" className='justify-center w-full h-7' onClick={() => window.location.href = '/api/auth/signout'} >Sair</Button>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 

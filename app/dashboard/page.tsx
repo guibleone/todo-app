@@ -3,46 +3,58 @@ import CreateForm from './components/createForm'
 import Navbar from '../ui/Navbar'
 import { fetchTasks } from '../actions/getTasks'
 import { Task } from '@prisma/client'
-import { Button } from '../ui/components/button'
-import { deleteTask } from '../lib/actions'
 import { DeleteTask } from './components/buttons'
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
+
 
 export default async function Dashobard() {
 
     const tasks = await fetchTasks()
 
     return (
-        <>
+        <main className='dark:bg-bondi-800'>
             <Navbar />
-            <h1 className='text-4xl font-bold text-center pt-5'>
-                Dashboard
-            </h1>
-            <main className='min-h-screen flex flex-col md:flex-row justify-around items-center '>
+            <section className='min-h-screen flex flex-col gap-8 md:flex-row justify-around items-center md:items-start py-8 px-8'>
 
-                <CreateForm />
+                <div className='flex flex-col self-start gap-5 w-full md:flex-1'>
+                <h1 className='text-2xl font-bold underline'>
+                        Nova Tarefa
+                    </h1>
+                    <CreateForm />
+                </div>
 
-                <div className='flex flex-col gap-5'>
-                    <h1 className='text-2xl font-bold'>
+                <div className='flex flex-col self-start gap-5 w-full md:flex-1 '>
+                    <h1 className='text-2xl font-bold underline'>
                         Tarefas
                     </h1>
-                    <div className='flex flex-col gap-5'>
-                        <div className='flex flex-col gap-2'>
-                            {tasks?.map((task: Task) => (
-                                <div key={task.id} className='flex flex-col gap-2'>
-                                    <h1 className='text-lg font-bold'>
-                                        {task.title}
-                                    </h1>
-                                    <p>
-                                        {task.description}
-                                    </p>
+
+
+                    {tasks?.map((task: Task) => (
+                        <>
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>{task.title}</CardTitle>
+                                    <CardDescription>{task.description}</CardDescription>
+                                </CardHeader>
+                                <CardContent>
                                     {task.completed ? <p className='text-green-500'>Concluída</p> : <p className='text-red-500'>Não concluída</p>}
+                                </CardContent>
+                                <CardFooter>
                                     <DeleteTask id={task.id} />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                                </CardFooter>
+                            </Card>
+                        </>
+                    ))}
+
                 </div>
-            </main>
-        </>
+            </section>
+        </main>
     )
 }

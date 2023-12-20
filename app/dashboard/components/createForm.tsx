@@ -2,7 +2,9 @@
 import { createTask } from '@/app/lib/actions';
 import { Button } from '@/app/ui/components/button';
 import { useFormState } from 'react-dom';
-
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+ 
 
 export default function CreateForm() {
     const initialState = {
@@ -17,19 +19,19 @@ export default function CreateForm() {
 
     return (
         <form action={dispatch}>
-            <div className="rounded-md bg-gray-50 p-4 md:p-6">
+            <div className="rounded-md bg-gray-800 p-4 md:p-6">
                 <div className="mb-4">
-                    <label htmlFor="description" className="mb-2 dark:text-black block text-sm font-medium">
+                    <Label htmlFor="description">
                         Título
-                    </label>
+                    </Label>
                     <div className="relative mt-2 rounded-md">
                         <div className="relative">
-                            <input
+                            <Input
                                 id="title"
                                 name="title"
                                 type="text"
                                 placeholder="Digite o título da tarefa"
-                                className=" block w-full rounded-md border dark:text-black border-gray-200 py-2 px-4 text-sm outline-2 placeholder:text-gray-500"
+                         
                                 aria-describedby="title-error"
                             />
 
@@ -46,17 +48,16 @@ export default function CreateForm() {
 
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="description" className="mb-2 block text-sm font-medium dark:text-black">
+                    <Label htmlFor="description" >
                         Descrição
-                    </label>
+                    </Label>
                     <div className="relative mt-2 rounded-md">
                         <div className="relative">
-                            <input
+                            <Input
                                 id="description"
                                 name="description"
                                 type="text"
                                 placeholder="Digite a descrição da tarefa"
-                                className="peer block w-full rounded-md border  dark:text-black border-gray-200 py-2 px-4 text-sm outline-2 placeholder:text-gray-500"
                                 aria-describedby="description-error"
                             />
 
