@@ -1,5 +1,5 @@
 import { deleteTask } from "@/app/lib/actions";
-import { TrashIcon } from "lucide-react";
+import { Edit, TrashIcon } from "lucide-react";
 
 export function DeleteTask({ id }: { id: string }) {
 
@@ -14,3 +14,15 @@ export function DeleteTask({ id }: { id: string }) {
     </form>
   );
 }
+
+
+export function EditTask({ id }: { id: string }) {
+
+  return (
+      <button className="rounded-md border p-2 hover:bg-green-500">
+        <span className="sr-only">Editar</span>
+        <Edit className="w-5" />
+      </button>
+  );
+}
+

@@ -43,7 +43,7 @@ export default function Navbar() {
 
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem className='justify-center' onSelect={() => window.location.href = '/dashboard'}>
+                <DropdownMenuItem className='justify-center' >
                   <Button variant="destructive" className='justify-center w-full h-7' onClick={() => window.location.href = '/api/auth/signout'} >Sair</Button>
                 </DropdownMenuItem>
               </DropdownMenuContent>

@@ -4,22 +4,24 @@ import { Button } from '@/app/ui/components/button';
 import { useFormState } from 'react-dom';
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
- 
+import { Checkbox } from '@/components/ui/checkbox';
+
 
 export default function CreateForm() {
     const initialState = {
         errors: {
-          title: undefined,
-          description: undefined,
+            title: undefined,
+            description: undefined,
+            completed: undefined,
         },
         message: '',
-      };
+    };
 
     const [state, dispatch] = useFormState(createTask, initialState);
 
     return (
         <form action={dispatch}>
-            <div className="rounded-md bg-gray-800 p-4 md:p-6">
+            <div className="rounded-md bg-[#020817] p-4 md:p-6">
                 <div className="mb-4">
                     <Label htmlFor="description">
                         Título
@@ -31,7 +33,7 @@ export default function CreateForm() {
                                 name="title"
                                 type="text"
                                 placeholder="Digite o título da tarefa"
-                         
+
                                 aria-describedby="title-error"
                             />
 
@@ -71,9 +73,19 @@ export default function CreateForm() {
                                 </p>
                             ))}
                     </div>
-
                 </div>
+                <div className='mb-4 flex gap-2'>
+                    <Checkbox id='completed' name='completed' />
+                    <label
+                        htmlFor="completed"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                        Tarefa completa
+                    </label>
+                </div>
+
             </div>
+
             <div className='justify-center flex mt-10'>
                 <Button className='w-full' type="submit">Criar</Button>
             </div>

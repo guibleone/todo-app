@@ -9,12 +9,24 @@ import prisma from "@/app/lib/db";
 const FormSchema = z.object({
     id: z.string(),
     userId: z.string(),
-    title: z.string({
-        invalid_type_error: 'Please enter a title for your task.',
-    }),
-    description: z.string({
-        invalid_type_error: 'Please enter a description for your task.',
-    }),
+    completed: z.string().optional(),
+    title:
+        z.string()
+            .min(1, {
+                message: 'Coloque um título para sua tarefa.',
+            })
+            .max(100, {
+                message: 'Título longo (max: 100 caracteres).',
+            })
+    ,
+    description: z.string()
+        .min(1, {
+            message: 'Coloque uma descrição para sua tarefa.',
+        })
+        .max(1000, {
+            message: 'Descrição longa (max: 1000 caracteres).',
+        })
+    ,
 });
 
 const CreateTask = FormSchema.omit({ id: true, userId: true })
@@ -25,16 +37,18 @@ export type State = {
         description?: string[];
     };
     message?: string | null;
-  };
+};
 
 // CRIAR TAREFA
 export async function createTask(prevState: State, formData: FormData) {
+
     // Validate form using Zod
     const validatedFields = CreateTask.safeParse({
         title: formData.get('title'),
         description: formData.get('description'),
     });
 
+    const completed = formData.get('completed') === 'on' ? true : false;
     // If form validation fails, return errors early. Otherwise, continue.
     if (!validatedFields.success) {
         return {
@@ -45,6 +59,7 @@ export async function createTask(prevState: State, formData: FormData) {
 
     // Prepare data for insertion into the database
     const { title, description } = validatedFields.data;
+
 
     // Get the current user
     const currentUser = await getCurrentUser();
@@ -63,7 +78,7 @@ export async function createTask(prevState: State, formData: FormData) {
                 title,
                 description,
                 userId: currentUser.id,
-                completed: false,
+                completed: completed,
             },
         });
     } catch (error) {
@@ -81,15 +96,15 @@ export async function createTask(prevState: State, formData: FormData) {
 
 /** DELETAR TAREFA */
 
-export async function deleteTask(id:string){
-    try{
+export async function deleteTask(id: string) {
+    try {
         await prisma.task.delete({
-            where:{
-                id:id
+            where: {
+                id: id
             }
         })
     }
-    catch(error){
+    catch (error) {
         console.error('Database Error:', error);
         return {
             message: 'Database Error: Failed to Delete Task.',

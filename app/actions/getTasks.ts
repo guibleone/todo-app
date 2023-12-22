@@ -16,6 +16,9 @@ export async function fetchTasks() {
             where: {
                 userId: currentUser?.id,
             },
+            orderBy: {
+                createdAt: 'desc',
+            },
         });
 
         return tasks;

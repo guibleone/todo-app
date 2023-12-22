@@ -3,7 +3,7 @@ import CreateForm from './components/createForm'
 import Navbar from '../ui/Navbar'
 import { fetchTasks } from '../actions/getTasks'
 import { Task } from '@prisma/client'
-import { DeleteTask } from './components/buttons'
+import { DeleteTask, EditTask } from './components/buttons'
 import {
     Card,
     CardContent,
@@ -35,9 +35,8 @@ export default async function Dashobard() {
                         Tarefas
                     </h1>
 
-
                     {tasks?.map((task: Task) => (
-                        <>
+                        <div key={task.id}>
                             <Card>
                                 <CardHeader>
                                     <CardTitle>{task.title}</CardTitle>
@@ -46,11 +45,12 @@ export default async function Dashobard() {
                                 <CardContent>
                                     {task.completed ? <p className='text-green-500'>Concluída</p> : <p className='text-red-500'>Não concluída</p>}
                                 </CardContent>
-                                <CardFooter>
+                                <CardFooter className='flex gap-2'>
                                     <DeleteTask id={task.id} />
+                                    <EditTask id={task.id} />
                                 </CardFooter>
                             </Card>
-                        </>
+                        </div>
                     ))}
 
                 </div>
@@ -58,3 +58,4 @@ export default async function Dashobard() {
         </main>
     )
 }
+
